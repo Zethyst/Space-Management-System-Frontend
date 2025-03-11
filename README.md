@@ -4,7 +4,6 @@
 
 [Visit Now](https://space-research-management-system.vercel.app/) 🚀
 
-## 🖥️ Tech Stack
 
 ## 🖥️ Tech Stack
 **Frontend:**
