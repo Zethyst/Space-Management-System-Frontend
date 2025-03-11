@@ -1,0 +1,171 @@
+<div
+  class="p-3"
+  id="scientificModal"
+  style="
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1050;
+  "
+>
+  <div
+    class="modal-dialog"
+    role="document"
+    style="
+      max-width: 600px;
+      width: 100%;
+      margin: 0;
+    "
+  >
+    <div
+      class="modal-content"
+      style="
+        position: relative;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        animation: fadeIn 0.3s ease-in-out;
+      "
+    >
+      <div
+        class="modal-header"
+        style="
+          background-color: #f8f9fa;
+          border-bottom: 1px solid #dee2e6;
+          padding: 1rem;
+        "
+      >
+        <h5
+          class="modal-title"
+          id="equipmentModalLabel"
+          style="margin: 0; font-weight: bold;"
+        >
+          {{ isEditMode ? 'Edit Scientific Data' : 'Add Scientific Data' }}
+        </h5>
+        <button
+          type="button"
+          (click)="closeDialog()"
+          style="
+            background: none;
+            border: none;
+            color: #aaa;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            line-height: 1;
+            transition: color 0.3s ease;
+          "
+          aria-label="Close"
+        >
+          <span aria-hidden="true" style="display: block;">&times;</span>
+        </button>
+      </div>
+      <div
+        class="modal-body"
+        style="padding: 1.5rem; background-color: #ffffff;"
+      >
+        <form [formGroup]="scientificDataForm">
+          <!-- Mission ID -->
+          <div class="form-group">
+            <label for="missionId">Mission ID</label>
+            <input
+              type="number"
+              class="form-control"
+              id="missionId"
+              formControlName="missionId"
+              placeholder="Enter Mission ID"
+              style="margin-bottom: 1rem;"
+            />
+          </div>
+
+          <!-- Equipment Type -->
+          <div class="form-group">
+            <label for="experimentType">Equipment Type</label>
+            <input
+              type="text"
+              class="form-control"
+              id="experimentType"
+              formControlName="experimentType"
+              placeholder="Enter Equipment Type"
+              style="margin-bottom: 1rem;"
+            />
+          </div>
+
+          <!-- Collected Date -->
+          <div class="form-group">
+            <label for="collectedDate">Collected Date</label>
+            <input
+              type="datetime-local"
+              class="form-control"
+              id="collectedDate"
+              formControlName="collectedDate"
+              style="margin-bottom: 1rem;"
+            />
+          </div>
+
+          <!-- Data Report -->
+          <div class="form-group">
+            <label for="dataReport">Data Report</label>
+            <textarea
+              class="form-control"
+              id="dataReport"
+              formControlName="dataReport"
+              rows="4"
+              placeholder="Enter Data Report"
+              style="margin-bottom: 1rem;"
+            ></textarea>
+          </div>
+
+          <!-- Researcher ID -->
+          <div class="form-group">
+            <label for="researcherId">Researcher ID</label>
+            <input
+              type="number"
+              class="form-control"
+              id="researcherId"
+              formControlName="researcherId"
+              placeholder="Enter Researcher ID"
+              style="margin-bottom: 1rem;"
+            />
+          </div>
+        </form>
+      </div>
+      <div
+        class="modal-footer"
+        style="
+          background-color: #f8f9fa;
+          border-top: 1px solid #dee2e6;
+          padding: 1rem;
+        "
+      >
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+          (click)="closeDialog()"
+          style="margin-right: 0.5rem;"
+        >
+          Close
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="saveScientificData()"
+          style="background-color: #007bff; border: none;"
+        >
+          Save Changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

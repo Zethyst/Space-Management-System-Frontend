@@ -1,0 +1,171 @@
+<div
+  class="p-3"
+  id="equipmentModal"
+  style="
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1050;
+  "
+>
+  <div
+    class="modal-dialog"
+    role="document"
+    style="
+      max-width: 600px;
+      width: 100%;
+      margin: 0;
+    "
+  >
+    <div
+      class="modal-content"
+      style="
+        position: relative;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        animation: fadeIn 0.3s ease-in-out;
+      "
+    >
+      <div
+        class="modal-header"
+        style="
+          background-color: #f8f9fa;
+          border-bottom: 1px solid #dee2e6;
+          padding: 1rem;
+        "
+      >
+        <h5
+          class="modal-title"
+          id="equipmentModalLabel"
+          style="margin: 0; font-weight: bold;"
+        >
+          {{ isEditMode ? 'Edit Equipment' : 'Add Equipment' }}
+        </h5>
+        <button
+          type="button"
+          (click)="closeDialog()"
+          style="
+            background: none;
+            border: none;
+            color: #aaa;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            line-height: 1;
+            transition: color 0.3s ease;
+          "
+          aria-label="Close"
+        >
+          <span aria-hidden="true" style="display: block;">&times;</span>
+        </button>
+      </div>
+      <div
+        class="modal-body"
+        style="padding: 1.5rem; background-color: #ffffff;"
+      >
+        <form [formGroup]="equipmentForm">
+          <!-- Equipment Name -->
+          <div class="form-group">
+            <label for="equipmentName">Equipment Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="equipmentName"
+              formControlName="name"
+              placeholder="Enter equipment name"
+              style="margin-bottom: 1rem;"
+            />
+          </div>
+
+          <!-- Equipment Type -->
+          <div class="form-group">
+            <label for="equipmentType">Equipment Type</label>
+            <input
+              type="text"
+              class="form-control"
+              id="equipmentType"
+              formControlName="type"
+              placeholder="Enter equipment type"
+              style="margin-bottom: 1rem;"
+            />
+          </div>
+
+          <!-- Condition -->
+          <div class="form-group">
+            <label for="condition">Condition</label>
+            <input
+              type="text"
+              class="form-control"
+              id="condition"
+              formControlName="condition"
+              placeholder="Enter equipment condition"
+              style="margin-bottom: 1rem;"
+            />
+          </div>
+
+          <!-- Assigned Mission -->
+          <div class="form-group">
+            <label for="assignedMission">Assigned Mission</label>
+            <input
+              type="text"
+              class="form-control"
+              id="assignedMission"
+              formControlName="assignedMission"
+              placeholder="Enter assigned mission"
+              style="margin-bottom: 1rem;"
+            />
+          </div>
+
+          <!-- Maintenance Date -->
+          <div class="form-group">
+            <label for="maintenanceDate">Maintenance Date</label>
+            <input
+              type="datetime-local"
+              class="form-control"
+              id="maintenanceDate"
+              formControlName="maintenanceDate"
+              style="margin-bottom: 1rem;"
+            />
+          </div>
+        </form>
+      </div>
+      <div
+        class="modal-footer"
+        style="
+          background-color: #f8f9fa;
+          border-top: 1px solid #dee2e6;
+          padding: 1rem;
+        "
+      >
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+          (click)="closeDialog()"
+          style="margin-right: 0.5rem;"
+        >
+          Close
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="saveEquipment()"
+          style="background-color: #007bff; border: none;"
+        >
+          Save Changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

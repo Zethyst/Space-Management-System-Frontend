@@ -1,0 +1,526 @@
+<div class="button-container">
+    <button
+      class="custom-button"
+      [ngClass]="{ active: showUsers }"
+      (click)="toggleUsers($event)">
+      Manage Users
+    </button>
+    <button
+      class="custom-button"
+      [ngClass]="{ active: showMissions }"
+      (click)="toggleMissions($event)">
+      Manage Missions
+    </button>
+    <button
+      class="custom-button"
+      [ngClass]="{ active: showEquipments }"
+      (click)="toggleEquipments($event)">
+      Manage Equipment
+    </button>
+    <button
+      class="custom-button"
+      [ngClass]="{ active: showScientificData }"
+      (click)="toggleScientificData($event)">
+      Input Scientific Data
+    </button>
+    <button
+      class="custom-button"
+      [ngClass]="{ active: showProjectPlan }"
+      (click)="toggleProjectPlan($event)">
+      Manage Project Plans
+    </button>
+    <button
+      class="custom-button"
+      [ngClass]="{ active: showPerformanceData }"
+      (click)="togglePerformanceData($event)">
+      View Performance Data
+    </button>
+    <button
+      class="custom-button"
+      [ngClass]="{ active: showSafetyData }"
+      (click)="toggleSafetyData($event)">
+      Safety Monitoring
+    </button>
+    <button
+      class="custom-button"
+      [ngClass]="{ active: showCostData }"
+      (click)="toggleCostData($event)">
+      Manage Cost
+    </button>
+    <button
+      class="custom-button"
+      [ngClass]="{ active: showEnvironmentData }"
+      (click)="toggleEnvironmentData($event)">
+      Environment & Risk Data
+    </button>
+    <button
+      class="custom-button"
+      [ngClass]="{ active: showReportData }"
+      (click)="toggleReportData($event)">
+      View Report Data
+    </button>
+  </div>
+
+<!--! -----------------------------------------------------------------------------------------------------Users Section -->
+<div class="missions-container" *ngIf="showUsers">
+  <div
+    style="display: flex; justify-content: space-between; align-items: center"
+  >
+    <h3>Users</h3>
+  </div>
+
+  <table class="missions-table">
+    <thead>
+      <tr>
+        <th>Full Name</th>
+        <th>Gender</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.fullName }}</td>
+        <td>{{ user.gender }}</td>
+        <td>{{ user.email }}</td>
+        <td>
+          <select
+          [value]="user.role"
+          #roleSelect
+          (change)="updateUserRole(user.id, roleSelect.value)"
+        >
+          <!-- User's current role as the first option -->
+          <option [value]="user.role">{{ user.role === 'TEACHER' ? 'NOT ASSIGNED' : user.role }}</option>
+
+          <!-- Loop through roles and apply conditions -->
+          <ng-container *ngFor="let role of roles">
+            <option 
+              *ngIf="role.name !== 'STUDENT' && role.name !== user.role" 
+              [value]="role.id"
+            >
+              {{ role.name === 'TEACHER' ? 'NOT ASSIGNED' : role.name }}
+            </option>
+          </ng-container>
+        </select>
+
+        </td>
+        <td>
+          <button class="action-button" (click)="openUsersDialog(user)">
+            Edit
+          </button>
+          <button class="action-button delete" (click)="deleteUser(user.id)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!--! -----------------------------------------------------------------------------------------------------Missions Section -->
+<div class="missions-container" *ngIf="showMissions">
+  <div
+    style="display: flex; justify-content: space-between; align-items: center"
+  >
+    <h3>Space Missions</h3>
+    <button class="custom-button2" (click)="openMissionDialog()">
+      Add Mission
+    </button>
+  </div>
+
+  <table class="missions-table">
+    <thead>
+      <tr>
+        <th>Mission Name</th>
+        <th>Launch Date</th>
+        <th>Objective</th>
+        <th>Status</th>
+        <th>Assigned Team</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let mission of missions">
+        <td>{{ mission.name }}</td>
+        <td>{{ mission.launchDate | date : "dd/MM/yyyy HH:mm:ss" }}</td>
+        <td>{{ mission.objective }}</td>
+        <td>{{ mission.status }}</td>
+        <td>{{ mission.assignedTeam }}</td>
+        <td>
+          <button class="action-button" (click)="openMissionDialog(mission)">
+            Edit
+          </button>
+          <button
+            class="action-button delete"
+            (click)="deleteMission(mission.missionId)"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- !--------------------------------------------------------------------------------------------------------------Equipment- -->
+<div class="missions-container" *ngIf="showEquipments">
+  <div
+    style="display: flex; justify-content: space-between; align-items: center"
+  >
+    <h3>Space Equipment and Resource Management</h3>
+    <button class="custom-button2" (click)="openEquipmentDialog()">
+      Add Equipment
+    </button>
+  </div>
+
+  <table class="missions-table">
+    <thead>
+      <tr>
+        <th>Equipment Name</th>
+        <th>Equipment Type</th>
+        <th>Condition</th>
+        <th>Assigned Mission</th>
+        <th>Maintenance Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let equipment of equipments">
+        <td>{{ equipment.name }}</td>
+        <td>{{ equipment.type }}</td>
+        <td>{{ equipment.condition }}</td>
+        <td>{{ equipment.assignedMission }}</td>
+        <td>{{ equipment.maintenanceDate | date : "dd/MM/yyyy HH:mm:ss" }}</td>
+        <td>
+          <button
+            class="action-button"
+            (click)="openEquipmentDialog(equipment)"
+          >
+            Edit
+          </button>
+          <button
+            class="action-button delete"
+            (click)="deleteEquipment(equipment.equipmentId)"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- !--------------------------------------------------------------------------------------------------------------Scientific Data- -->
+<div class="missions-container" *ngIf="showScientificData">
+  <div
+    style="display: flex; justify-content: space-between; align-items: center"
+  >
+    <h3>Scientific Data Management</h3>
+    <button class="custom-button2" (click)="openScientificDataDialog()">
+      Add Scientific Data
+    </button>
+  </div>
+
+  <table class="missions-table">
+    <thead>
+      <tr>
+        <th>MissionID</th>
+        <th>Equipment Type</th>
+        <th>Collected Date</th>
+        <th>Data Report</th>
+        <th>ResearcherID</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let sd of scientificDataRecords">
+        <td>{{ sd.missionId }}</td>
+        <td>{{ sd.experimentType }}</td>
+        <td>{{ sd.collectedDate | date : "dd/MM/yyyy HH:mm:ss" }}</td>
+        <td>{{ sd.dataReport }}</td>
+        <td>{{ sd.researcherId }}</td>
+        <td>
+          <button class="action-button" (click)="openScientificDataDialog(sd)">
+            Edit
+          </button>
+          <button
+            class="action-button delete"
+            (click)="deleteScientificData(sd.dataId)"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- !-------------------------------------------------------------------------------------------------------------Project Plan- -->
+<div class="missions-container" *ngIf="showProjectPlan">
+  <div
+    style="display: flex; justify-content: space-between; align-items: center"
+  >
+    <h3>Project Plan</h3>
+    <button class="custom-button2" (click)="openProjectPlanDialog()">
+      Add Project Plan
+    </button>
+  </div>
+
+  <table class="missions-table">
+    <thead>
+      <tr>
+        <th>MissionID</th>
+        <th>Activity Type</th>
+        <th>Assigned Engineer</th>
+        <th>Status</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pp of projectPlanRecords">
+        <td>{{ pp.missionId }}</td>
+        <td>{{ pp.activityType }}</td>
+        <td>{{ pp.assignedEngineer }}</td>
+        <td>{{ pp.status }}</td>
+        <td>{{ pp.startDate | date : "dd/MM/yyyy HH:mm:ss" }}</td>
+        <td>{{ pp.endDate | date : "dd/MM/yyyy HH:mm:ss" }}</td>
+        <td>
+          <button class="action-button" (click)="openProjectPlanDialog(pp)">
+            Edit
+          </button>
+          <button
+            class="action-button delete"
+            (click)="deleteProjectPlan(pp.planId)"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- !-------------------------------------------------------------------------------------------------------------Performance Data- -->
+<div class="missions-container" *ngIf="showPerformanceData">
+  <div
+    style="display: flex; justify-content: space-between; align-items: center"
+  >
+    <h3>Mission Performance Data</h3>
+    <button class="custom-button2" (click)="openPerformanceDataDialog()">
+      Add Performance Data
+    </button>
+  </div>
+
+  <table class="missions-table">
+    <thead>
+      <tr>
+        <th>MissionID</th>
+        <th>Objectives Met</th>
+        <th>Data Collected</th>
+        <th>Supervisor</th>
+        <th>Completion Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pp of performanceDataRecords">
+        <td>{{ pp.missionId }}</td>
+        <td>{{ pp.objectivesMet }}</td>
+        <td>{{ pp.dataCollected }}</td>
+        <td>{{ pp.supervisor }}</td>
+        <td>{{ pp.completionDate | date : "dd/MM/yyyy HH:mm:ss" }}</td>
+        <td>
+          <button class="action-button" (click)="openPerformanceDataDialog(pp)">
+            Edit
+          </button>
+          <button
+            class="action-button delete"
+            (click)="deletePerformanceData(pp.performanceId)"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- !-----------------------------------------------------------------------------------------------------Safety Data- -->
+<div class="missions-container" *ngIf="showSafetyData">
+  <div
+    style="display: flex; justify-content: space-between; align-items: center"
+  >
+    <h3>Safety and Compliance Monitoring</h3>
+    <button class="custom-button2" (click)="openSafetyDataDialog()">
+      Add Safety Data
+    </button>
+  </div>
+
+  <table class="missions-table">
+    <thead>
+      <tr>
+        <th>Mission ID</th>
+        <th>Description</th>
+        <th>Date</th>
+        <th>Severity</th>
+        <th>Resolution Status</th>
+        <th>Reported By</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let sd of safetyDataRecords">
+        <td>{{ sd.missionId }}</td>
+        <td>{{ sd.description }}</td>
+        <td>{{ sd.date | date : "dd/MM/yyyy HH:mm:ss" }}</td>
+        <td>{{ sd.severity }}</td>
+        <td>{{ sd.resolutionStatus }}</td>
+        <td>{{ sd.reportedBy }}</td>
+        <td>
+          <button class="action-button" (click)="openSafetyDataDialog(sd)">
+            Edit
+          </button>
+          <button
+            class="action-button delete"
+            (click)="deleteSafetyData(sd.logId)"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- !-----------------------------------------------------------------------------------------------------Cost Management- -->
+<div class="missions-container" *ngIf="showCostData">
+  <div
+    style="display: flex; justify-content: space-between; align-items: center"
+  >
+    <h3> Cost and Budget Management</h3>
+    <button class="custom-button2" (click)="openCostDataDialog()">
+      Add Cost Data
+    </button>
+  </div>
+
+  <table class="missions-table">
+    <thead>
+      <tr>
+        <th>Mission ID</th>
+        <th>Expense Type</th>
+        <th>Date</th>
+        <th>Amount</th>
+        <th>Responsible Person</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cd of costDataRecords">
+        <td>{{ cd.missionId }}</td>
+        <td>{{ cd.expenseType }}</td>
+        <td>{{ cd.date | date : "dd/MM/yyyy HH:mm:ss" }}</td>
+        <td>{{ cd.amount }}</td>
+        <td>{{ cd.responsiblePerson }}</td>
+        <td>
+          <button class="action-button" (click)="openCostDataDialog(cd)">
+            Edit
+          </button>
+          <button
+            class="action-button delete"
+            (click)="deleteCostData(cd.costId)"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- !-----------------------------------------------------------------------------------------------------Environment Data-->
+<div class="missions-container" *ngIf="showEnvironmentData">
+  <div
+    style="display: flex; justify-content: space-between; align-items: center"
+  >
+    <h3> Environmental and Risk Assessment</h3>
+    <button class="custom-button2" (click)="openEnvironmentDataDialog()">
+      Add Environment Data
+    </button>
+  </div>
+
+  <table class="missions-table">
+    <thead>
+      <tr>
+        <th>Mission ID</th>
+        <th>Impact Type</th>
+        <th>Date</th>
+        <th>Recommendations</th>
+        <th>Conducted By</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ed of environmentDataRecords">
+        <td>{{ ed.missionId }}</td>
+        <td>{{ ed.impactType }}</td>
+        <td>{{ ed.date | date : "dd/MM/yyyy HH:mm:ss" }}</td>
+        <td>{{ ed.recommendations }}</td>
+        <td>{{ ed.conductedBy }}</td>
+        <td>
+          <button class="action-button" (click)="openEnvironmentDataDialog(ed)">
+            Edit
+          </button>
+          <button
+            class="action-button delete"
+            (click)="deleteEnvironmentData(ed.assessmentId)"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- !-----------------------------------------------------------------------------------------------------Report Data-->
+<div class="missions-container" *ngIf="showReportData">
+  <div
+    style="display: flex; justify-content: space-between; align-items: center"
+  >
+    <h3> Reporting and Analytics</h3>
+    <button class="custom-button2" (click)="openReportDataDialog()">
+      Add Report Data
+    </button>
+  </div>
+
+  <table class="missions-table">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Generated Date</th>
+        <th>Data</th>
+        <th>Created By</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let r of reportDataRecords">
+        <td>{{ r.type }}</td>
+        <td>{{ r.generatedDate | date : "dd/MM/yyyy HH:mm:ss" }}</td>
+        <td>{{ r.data }}</td>
+        <td>{{ r.createdBy }}</td>
+        <td>
+          <button class="action-button" (click)="openReportDataDialog(r)">
+            Edit
+          </button>
+          <button
+            class="action-button delete mx-3"
+            (click)="deleteReportData(r.assessmentId)"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

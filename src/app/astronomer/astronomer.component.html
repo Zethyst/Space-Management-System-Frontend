@@ -1,0 +1,143 @@
+<div class="button-container">
+  <!-- Buttons to toggle visibility of different sections -->
+  <button
+    class="custom-button"
+    [ngClass]="{ active: showEquipments }"
+    (click)="toggleEquipments($event)">
+    Manage Equipment
+  </button>
+  <button
+    class="custom-button"
+    [ngClass]="{ active: showScientificData }"
+    (click)="toggleScientificData($event)">
+    Input Scientific Data
+  </button>
+  <button
+    class="custom-button"
+    [ngClass]="{ active: showPerformanceData }"
+    (click)="togglePerformanceData($event)">
+    View Performance Data
+  </button>
+</div>
+
+<!-- !Equipment Section -->
+<div class="missions-container" *ngIf="showEquipments">
+  <div style="display: flex; justify-content: space-between; align-items: center">
+    <h3>Space Equipments</h3>
+  </div>
+  
+  <!-- !Table displaying equipment details -->
+  <table class="missions-table">
+    <thead>
+      <tr>
+        <th>Equipment Name</th>
+        <th>Equipment Type</th>
+        <th>Condition</th>
+        <th>Assigned Mission</th>
+        <th>Maintenance Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Loop through and display each equipment -->
+      <tr *ngFor="let equipment of equipments">
+        <td>{{ equipment.name }}</td>
+        <td>{{ equipment.type }}</td>
+        <td>{{ equipment.condition }}</td>
+        <td>{{ equipment.assignedMission }}</td>
+        <td>{{ equipment.maintenanceDate | date : "dd/MM/yyyy HH:mm:ss" }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- !Scientific Data Section -->
+<div class="missions-container" *ngIf="showScientificData">
+  <div style="display: flex; justify-content: space-between; align-items: center">
+    <h3>Scientific Data</h3>
+    <!-- Button to add new scientific data -->
+    <button class="custom-button2" (click)="openScientificDataDialog()">
+      Add Scientific Data
+    </button>
+  </div>
+  
+  <!-- Table displaying scientific data records -->
+  <table class="missions-table">
+    <thead>
+      <tr>
+        <th>MissionID</th>
+        <th>Equipment Type</th>
+        <th>Collected Date</th>
+        <th>Data Report</th>
+        <th>ResearcherID</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Loop through and display each scientific data record -->
+      <tr *ngFor="let sd of scientificDataRecords">
+        <td>{{ sd.missionId }}</td>
+        <td>{{ sd.experimentType }}</td>
+        <td>{{ sd.collectedDate | date : "dd/MM/yyyy HH:mm:ss" }}</td>
+        <td>{{ sd.dataReport }}</td>
+        <td>{{ sd.researcherId }}</td>
+        <td>
+          <!-- Edit and delete buttons for each record -->
+          <button class="action-button" (click)="openScientificDataDialog(sd)">
+            Edit
+          </button>
+          <button
+            class="action-button delete"
+            (click)="deleteScientificData(sd.dataId)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- !Performance Data Section -->
+<div class="missions-container" *ngIf="showPerformanceData">
+  <div style="display: flex; justify-content: space-between; align-items: center">
+    <h3>Performance Data</h3>
+    <!-- Button to add new performance data -->
+    <button class="custom-button2" (click)="openPerformanceDataDialog()">
+      Add Performance Data
+    </button>
+  </div>
+  
+  <!-- Table displaying performance data records -->
+  <table class="missions-table">
+    <thead>
+      <tr>
+        <th>MissionID</th>
+        <th>Objectives Met</th>
+        <th>Data Collected</th>
+        <th>Supervisor</th>
+        <th>Completion Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Loop through and display each performance data record -->
+      <tr *ngFor="let pp of performanceDataRecords">
+        <td>{{ pp.missionId }}</td>
+        <td>{{ pp.objectivesMet }}</td>
+        <td>{{ pp.dataCollected }}</td>
+        <td>{{ pp.supervisor }}</td>
+        <td>{{ pp.completionDate | date : "dd/MM/yyyy HH:mm:ss" }}</td>
+        <td>
+          <!-- Edit and delete buttons for each record -->
+          <button class="action-button" (click)="openPerformanceDataDialog(pp)">
+            Edit
+          </button>
+          <button
+            class="action-button delete"
+            (click)="deletePerformanceData(pp.performanceId)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,92 @@
+<div class="button-container">
+    <button
+      class="custom-button"
+      [ngClass]="{ active: showScientificData }"
+      (click)="toggleScientificData($event)">
+      Input Scientific Data
+    </button>
+    <button
+      class="custom-button"
+      [ngClass]="{ active: showPerformanceData }"
+      (click)="togglePerformanceData($event)">
+      View Performance Data
+    </button>
+  </div>
+
+
+  <!-- !--------------------------------------------------------------------------------------------------------------Scientific Data- -->
+  <div class="missions-container" *ngIf="showScientificData">
+    <div
+      style="display: flex; justify-content: space-between; align-items: center"
+    >
+      <h3>Scientific Data</h3>
+      <button class="custom-button2" (click)="openScientificDataDialog()">
+        Add Scientific Data
+      </button>
+    </div>
+  
+    <table class="missions-table">
+      <thead>
+        <tr>
+          <th>MissionID</th>
+          <th>Equipment Type</th>
+          <th>Collected Date</th>
+          <th>Data Report</th>
+          <th>ResearcherID</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let sd of scientificDataRecords">
+          <td>{{ sd.missionId }}</td>
+          <td>{{ sd.experimentType }}</td>
+          <td>{{ sd.collectedDate | date : "dd/MM/yyyy HH:mm:ss" }}</td>
+          <td>{{ sd.dataReport }}</td>
+          <td>{{ sd.researcherId }}</td>
+          <td>
+            <button class="action-button" (click)="openScientificDataDialog(sd)">
+              Edit
+            </button>
+            <button
+              class="action-button delete"
+              (click)="deleteScientificData(sd.dataId)"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  
+  <!-- !-------------------------------------------------------------------------------------------------------------Performance Data- -->
+  <div class="missions-container" *ngIf="showPerformanceData">
+    <div
+      style="display: flex; justify-content: space-between; align-items: center"
+    >
+      <h3>Performance Data</h3>
+    </div>
+  
+    <table class="missions-table">
+      <thead>
+        <tr>
+          <th>MissionID</th>
+          <th>Objectives Met</th>
+          <th>Data Collected</th>
+          <th>Supervisor</th>
+          <th>Completion Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pp of performanceDataRecords">
+          <td>{{ pp.missionId }}</td>
+          <td>{{ pp.objectivesMet }}</td>
+          <td>{{ pp.dataCollected }}</td>
+          <td>{{ pp.supervisor }}</td>
+          <td>{{ pp.completionDate | date : "dd/MM/yyyy HH:mm:ss" }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

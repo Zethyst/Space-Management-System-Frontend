@@ -1,0 +1,42 @@
+  <!-- !--------------------------------------------------------------------------------------------------------------Notifications- -->
+  <div class="missions-container">
+    <div
+      style="display: flex; justify-content: space-between; align-items: center"
+    >
+      <h3>Notification</h3>
+      <button class="custom-button" (click)="openNotificationDialog()">
+        Add Notification
+      </button>
+    </div>
+    <table class="missions-table" id="notification-table">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Message</th>
+          <th>Timestamp</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let n of notifications">
+          <td>{{ n.type }}</td>
+          <td>{{ n.message }}</td>
+          <td>{{ n.timestamp | date : "dd/MM/yyyy HH:mm:ss"  }}</td>
+          <td>
+            <button
+              class="action-button"
+              (click)="openNotificationDialog(n)"
+            >
+              Edit
+            </button>
+            <button
+              class="action-button delete"
+              (click)="deleteNotification(n.equipmentId)"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>

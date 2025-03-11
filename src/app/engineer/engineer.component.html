@@ -1,0 +1,308 @@
+<div class="button-container">
+  <button
+    class="custom-button"
+    [ngClass]="{ active: showEquipments }"
+    (click)="toggleEquipments($event)"
+  >
+    Manage Equipment
+  </button>
+  <button
+    class="custom-button"
+    [ngClass]="{ active: showProjectPlan }"
+    (click)="toggleProjectPlan($event)"
+  >
+    Manage Project Plans
+  </button>
+  <button
+    class="custom-button"
+    [ngClass]="{ active: showPerformanceData }"
+    (click)="togglePerformanceData($event)"
+  >
+    View Performance Data
+  </button>
+  <button
+    class="custom-button"
+    [ngClass]="{ active: showSafetyData }"
+    (click)="toggleSafetyData($event)"
+  >
+    Safety Monitoring
+  </button>
+  <button
+    class="custom-button"
+    [ngClass]="{ active: showCostData }"
+    (click)="toggleCostData($event)"
+  >
+    Manage Cost
+  </button>
+  <button
+    class="custom-button"
+    [ngClass]="{ active: showEnvironmentData }"
+    (click)="toggleEnvironmentData($event)"
+  >
+    Environment & Risk Data
+  </button>
+  <button
+    class="custom-button"
+    [ngClass]="{ active: showReportData }"
+    (click)="toggleReportData($event)"
+  >
+    View Report Data
+  </button>
+</div>
+
+<!-- !--------------------------------------------------------------------------------------------------------------Equipment- -->
+<div class="missions-container" *ngIf="showEquipments">
+  <div
+    style="display: flex; justify-content: space-between; align-items: center"
+  >
+    <h3>Space Equipments</h3>
+    <button class="custom-button2" (click)="openEquipmentDialog()">
+      Add Equipment
+    </button>
+  </div>
+
+  <table class="missions-table">
+    <thead>
+      <tr>
+        <th>Equipment Name</th>
+        <th>Equipment Type</th>
+        <th>Condition</th>
+        <th>Assigned Mission</th>
+        <th>Maintenance Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let equipment of equipments">
+        <td>{{ equipment.name }}</td>
+        <td>{{ equipment.type }}</td>
+        <td>{{ equipment.condition }}</td>
+        <td>{{ equipment.assignedMission }}</td>
+        <td>{{ equipment.maintenanceDate | date : "dd/MM/yyyy HH:mm:ss" }}</td>
+        <td>
+          <button
+            class="action-button"
+            (click)="openEquipmentDialog(equipment)"
+          >
+            Edit
+          </button>
+          <button
+            class="action-button delete"
+            (click)="deleteEquipment(equipment.equipmentId)"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- !-------------------------------------------------------------------------------------------------------------Project Plan- -->
+<div class="missions-container" *ngIf="showProjectPlan">
+  <div
+    style="display: flex; justify-content: space-between; align-items: center"
+  >
+    <h3>Project Plan</h3>
+    <button class="custom-button2" (click)="openProjectPlanDialog()">
+      Add Project Plan
+    </button>
+  </div>
+
+  <table class="missions-table">
+    <thead>
+      <tr>
+        <th>MissionID</th>
+        <th>Activity Type</th>
+        <th>Assigned Engineer</th>
+        <th>Status</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pp of projectPlanRecords">
+        <td>{{ pp.missionId }}</td>
+        <td>{{ pp.activityType }}</td>
+        <td>{{ pp.assignedEngineer }}</td>
+        <td>{{ pp.status }}</td>
+        <td>{{ pp.startDate | date : "dd/MM/yyyy HH:mm:ss" }}</td>
+        <td>{{ pp.endDate | date : "dd/MM/yyyy HH:mm:ss" }}</td>
+        <td>
+          <button class="action-button" (click)="openProjectPlanDialog(pp)">
+            Edit
+          </button>
+          <button
+            class="action-button delete"
+            (click)="deleteProjectPlan(pp.planId)"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- !-------------------------------------------------------------------------------------------------------------Performance Data- -->
+<div class="missions-container" *ngIf="showPerformanceData">
+  <div
+    style="display: flex; justify-content: space-between; align-items: center"
+  >
+    <h3>Performance Data</h3>
+    <button class="custom-button2" (click)="openPerformanceDataDialog()">
+      Add Performance Data
+    </button>
+  </div>
+
+  <table class="missions-table">
+    <thead>
+      <tr>
+        <th>MissionID</th>
+        <th>Objectives Met</th>
+        <th>Data Collected</th>
+        <th>Supervisor</th>
+        <th>Completion Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pp of performanceDataRecords">
+        <td>{{ pp.missionId }}</td>
+        <td>{{ pp.objectivesMet }}</td>
+        <td>{{ pp.dataCollected }}</td>
+        <td>{{ pp.supervisor }}</td>
+        <td>{{ pp.completionDate | date : "dd/MM/yyyy HH:mm:ss" }}</td>
+        <td>
+          <button class="action-button" (click)="openPerformanceDataDialog(pp)">
+            Edit
+          </button>
+          <button
+            class="action-button delete"
+            (click)="deletePerformanceData(pp.performanceId)"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- !-----------------------------------------------------------------------------------------------------Safety Data- -->
+<div class="missions-container" *ngIf="showSafetyData">
+  <div
+    style="display: flex; justify-content: space-between; align-items: center"
+  >
+    <h3>Safety and Compliance Monitoring</h3>
+  </div>
+
+  <table class="missions-table">
+    <thead>
+      <tr>
+        <th>Mission ID</th>
+        <th>Description</th>
+        <th>Date</th>
+        <th>Severity</th>
+        <th>Resolution Status</th>
+        <th>Reported By</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let sd of safetyDataRecords">
+        <td>{{ sd.missionId }}</td>
+        <td>{{ sd.description }}</td>
+        <td>{{ sd.date | date : "dd/MM/yyyy HH:mm:ss" }}</td>
+        <td>{{ sd.severity }}</td>
+        <td>{{ sd.resolutionStatus }}</td>
+        <td>{{ sd.reportedBy }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- !-----------------------------------------------------------------------------------------------------Cost Management- -->
+<div class="missions-container" *ngIf="showCostData">
+  <div
+    style="display: flex; justify-content: space-between; align-items: center"
+  >
+    <h3> Cost and Budget Management</h3>
+  </div>
+
+  <table class="missions-table">
+    <thead>
+      <tr>
+        <th>Mission ID</th>
+        <th>Expense Type</th>
+        <th>Date</th>
+        <th>Amount</th>
+        <th>Responsible Person</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cd of costDataRecords">
+        <td>{{ cd.missionId }}</td>
+        <td>{{ cd.expenseType }}</td>
+        <td>{{ cd.date | date : "dd/MM/yyyy HH:mm:ss" }}</td>
+        <td>{{ cd.amount }}</td>
+        <td>{{ cd.responsiblePerson }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- !-----------------------------------------------------------------------------------------------------Environment Data-->
+<div class="missions-container" *ngIf="showEnvironmentData">
+  <div
+    style="display: flex; justify-content: space-between; align-items: center"
+  >
+    <h3> Environmental and Risk Assessment</h3>
+  </div>
+
+  <table class="missions-table">
+    <thead>
+      <tr>
+        <th>Mission ID</th>
+        <th>Impact Type</th>
+        <th>Date</th>
+        <th>Recommendations</th>
+        <th>Conducted By</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ed of environmentDataRecords">
+        <td>{{ ed.missionId }}</td>
+        <td>{{ ed.impactType }}</td>
+        <td>{{ ed.date | date : "dd/MM/yyyy HH:mm:ss" }}</td>
+        <td>{{ ed.recommendations }}</td>
+        <td>{{ ed.conductedBy }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- !-----------------------------------------------------------------------------------------------------Report Data-->
+<div class="missions-container" *ngIf="showReportData">
+  <div
+    style="display: flex; justify-content: space-between; align-items: center"
+  >
+    <h3> Reporting and Analytics</h3>
+  </div>
+
+  <table class="missions-table">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Generated Date</th>
+        <th>Data</th>
+        <th>Created By</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let r of reportDataRecords">
+        <td>{{ r.type }}</td>
+        <td>{{ r.generatedDate | date : "dd/MM/yyyy HH:mm:ss" }}</td>
+        <td>{{ r.data }}</td>
+        <td>{{ r.createdBy }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
